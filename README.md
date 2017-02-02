@@ -40,4 +40,6 @@ http://codepen.io/notarseniy/pen/VPXWLp<br>
 Цель игры - уничтожить все блоки (големы) противника или остаться единственным игроком, который сможет сделать полный ход (т.е. запереть всех игроков своими полублоками (курганами)).
 ```
 
-Арсений Максимов, 2017©
+## Copyright
+
+Arseniy Maximov, 2017 ©. [MIT License](https://github.com/notarseniy/ElementsBattle/blob/master/LICENSE)
