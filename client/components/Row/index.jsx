@@ -10,10 +10,12 @@ class Row extends Component {
   
   render() {
     let elements = [];
+    const { game, actions, children } = this.props;
+    const appProps = { game, actions };
     
     for (let column = 1; column <= SQUARE_SIDE; column++) {
       elements.push(
-        <Cell key={column-1} row={this.props.row} column={column} />
+        <Cell key={column-1} row={this.props.row} column={column} {...appProps} />
       );
     }
     

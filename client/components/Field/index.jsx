@@ -8,14 +8,37 @@ class Field extends Component {
     super(props, context);
   }
 
+  _checkMove(row, column, player) {
+    for (let i = 0; i < 8; i++) {
+
+    }
+  }
+  
+  makeMove() {
+    const { game, actions, children } = this.props;
+    
+
+  }
+
+  componentDidMount() {
+    const { gameStart } = this.props.actions;
+
+    // TODO: Make selection UI
+    gameStart({
+      fire: true,
+      air: true
+    })
+  }
+
   render() {
     const { game, actions, children } = this.props;
+    const appProps = { game, actions };
       
     let rows = [];
     
     for (let row = 1; row <= SQUARE_SIDE; row++) {
       rows.push(
-        <Row key={row-1} row={row} />
+        <Row key={row-1} row={row} {...appProps} />
       );
     }
     

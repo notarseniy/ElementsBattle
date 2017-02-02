@@ -43,6 +43,8 @@
 ЮЗ — Огонь<br>
 ЮВ — Земля
 
+http://imgur.com/a/Fj3qz#0
+
 ## Copyright
 
 Arseniy Maximov, 2017 ©. [MIT License](https://github.com/notarseniy/ElementsBattle/blob/master/LICENSE)

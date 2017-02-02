@@ -6,43 +6,28 @@ import style from './style.css';
 class Cell extends Component {
   constructor(props, context) {
     super(props, context);
-    
-    const isStartLocation = (x, y) => (
-        !isNil(
-          find(
-            propEq('x', x)
-          )(
-            filter(
-              propEq('y', y)
-            )(START_ELEMENTS)
-          )
-        )
-      );
-    const row = props.row;
-    const column = props.column;
-    
-    console.log(props, isStartLocation(row, column));
-    
-    this.state = {
-      x: row,
-      y: column,
-      status: ELEMENT_STATUS.EMPTY,
-      isStartLocation: isStartLocation(row, column)
-    };
   }
   
   handleClick() {
-    const isEmpty = this.state.status === ELEMENT_STATUS.EMPTY;
-    
-    this.setState({
+    const { game, row, column } = this.props;
+    const { cellChangeStatus } = this.props.actions;
+    const isEmpty = game.field[row-1][column-1].status === ELEMENT_STATUS.EMPTY;
+
+    cellChangeStatus({
+      row: row,
+      column: column,
       status: (isEmpty) ? ELEMENT_STATUS.FULL : ELEMENT_STATUS.HALF
     });
   }
   
   render() {
-    const isStartLocation = (!!this.state.isStartLocation) ? style.start : '';
-    const isHalf = (this.state.status === ELEMENT_STATUS.HALF) ? style.half : '';
-    const isFull = (this.state.status === ELEMENT_STATUS.FULL) ? style.full : '';
+    const { game, actions, row, column } = this.props;
+
+    const cell = game.field[row-1][column-1];
+
+    const isStartLocation = (!!cell.isStartLocation) ? style.start : '';
+    const isHalf = (cell.status === ELEMENT_STATUS.HALF) ? style.half : '';
+    const isFull = (cell.status === ELEMENT_STATUS.FULL) ? style.full : '';
     
     return (
       <div className={`${style.cell} ${isStartLocation} ${isHalf} ${isFull}`} onClick={::this.handleClick}></div>

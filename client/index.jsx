@@ -7,8 +7,6 @@ import React from 'react';
 import App from './containers/App';
 import configure from './store';
 
-console.log(App);
-
 const store = configure();
 const history = syncHistoryWithStore(browserHistory, store);
 

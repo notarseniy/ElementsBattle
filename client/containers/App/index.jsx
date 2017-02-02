@@ -8,10 +8,11 @@ import style from './style.css';
 class App extends Component {
   render() {
     const { game, actions, children } = this.props;
-    
+    const appProps = { game, actions };
+
     return (
       <div className={style.container}>
-        <Field />
+        <Field {...appProps} />
       </div>
     );
   }
