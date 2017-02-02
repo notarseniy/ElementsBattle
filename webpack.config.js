@@ -8,7 +8,7 @@ var port = (+process.env.PORT) || 3000;
 module.exports = {
   context: path.join(__dirname, './client'),
   entry: {
-    jsx: './index.js',
+    jsx: './index.jsx',
     //html: './index.html',
     vendor: [
       'react',
@@ -62,7 +62,7 @@ module.exports = {
         use: [
           'react-hot-loader',
           'babel-loader'
-]
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|svg|eot|ttf|woff|woff2)$/,

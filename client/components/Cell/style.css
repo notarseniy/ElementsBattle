@@ -1,0 +1,15 @@
+.cell {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.start {
+  background: #e18b8b;
+}
+
+.half {
+  background: #64da7c;
+}
+
+.full {
+  background: #239239;
+}

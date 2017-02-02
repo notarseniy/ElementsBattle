@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Row from '../../components/Row';
+import Field from '../../components/Field';
 import * as GameActions from '../../actions/game';
 import style from './style.css';
 
 class App extends Component {
   render() {
     const { game, actions, children } = this.props;
-    let rows = [];
-    
-    for (let row = 1; row <= SQUARE_SIDE; row++) {
-      rows.push(
-        <Row row={row} />
-      );
-    }
     
     return (
-      <div className="container">
-        <div className="field field--twenty">
-          {rows}
-        </div>
+      <div className={style.container}>
+        <Field />
       </div>
     );
   }
@@ -41,4 +32,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App)
+)(App);

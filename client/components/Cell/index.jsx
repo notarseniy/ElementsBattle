@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { isNil, find, propEq, filter } from 'ramda';
 import { ELEMENT_STATUS, START_ELEMENTS } from '../../constants/game.js';
+import style from './style.css';
 
-class Element extends React.Component {
+class Cell extends Component {
   constructor(props, context) {
     super(props, context);
     
-    const isStartLocation = (x, y) => !isNil(find(propEq('x', x))(filter(propEq('y', y))(START_ELEMENTS)));
+    const isStartLocation = (x, y) => (
+        !isNil(
+          find(
+            propEq('x', x)
+          )(
+            filter(
+              propEq('y', y)
+            )(START_ELEMENTS)
+          )
+        )
+      );
     const row = props.row;
     const column = props.column;
     
@@ -29,12 +40,14 @@ class Element extends React.Component {
   }
   
   render() {
-    const isStartLocation = (!!this.state.isStartLocation) ? 'element--start' : '';
-    const isHalf = (this.state.status === ELEMENT_STATUS.HALF) ? 'element--half' : '';
-    const isFull = (this.state.status === ELEMENT_STATUS.FULL) ? 'element--full' : '';
+    const isStartLocation = (!!this.state.isStartLocation) ? style.start : '';
+    const isHalf = (this.state.status === ELEMENT_STATUS.HALF) ? style.half : '';
+    const isFull = (this.state.status === ELEMENT_STATUS.FULL) ? style.full : '';
     
     return (
-      <div className={`element ${isStartLocation} ${isHalf} ${isFull}`} onClick={::this.handleClick}></div>
+      <div className={`${style.cell} ${isStartLocation} ${isHalf} ${isFull}`} onClick={::this.handleClick}></div>
     );
   }
 }
+
+export default Cell;

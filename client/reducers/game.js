@@ -13,6 +13,10 @@ const initialState = {
 };
 
 export default handleActions({
-  
-
+  'CHANGE_PAGE' (state, action) {
+    return {
+      ...state,
+      page: action.payload
+    }
+  },
 }, initialState)
