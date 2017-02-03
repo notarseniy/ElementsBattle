@@ -2,6 +2,47 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* water */
+.player-0 {
+  &.half {
+    background-color: #45a3ff;
+  }
+  
+  &.full {
+    background-color: #1e90ff;
+  }
+}
+/* air */
+.player-1 {
+  &.half {
+    background-color: #a4a4a4;
+  }
+  
+  &.full {
+    background-color: #696969;
+  }
+}
+/* earth */
+.player-2 {
+  &.half {
+    background-color: #5fd85f;
+  }
+  
+  &.full {
+    background-color: #228b22;
+  }
+}
+/* fire */
+.player-3 {
+  &.half {
+    background-color: #e26868;
+  }
+  
+  &.full {
+    background-color: #b22222;
+  }
+}
+
 .start {
   background: #e18b8b;
 }

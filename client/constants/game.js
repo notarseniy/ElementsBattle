@@ -5,7 +5,11 @@ export const PLAYERS = {
   WATER: 0,
   AIR: 1,
   EARTH: 2,
-  FIRE: 3
+  FIRE: 3,
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3
 };
 
 export const MOVES_COUNT = 7;

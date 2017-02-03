@@ -16,9 +16,10 @@ class Cell extends Component {
     const isStartLocation = (!!cell.isStartLocation) ? style.start : '';
     const isHalf = (cell.status === ELEMENT_STATUS.HALF) ? style.half : '';
     const isFull = (cell.status === ELEMENT_STATUS.FULL) ? style.full : '';
+    const player = (cell.player !== false) ? style['player' + cell.player] : '';
 
     return (
-      <div className={`${style.cell} ${isStartLocation} ${isHalf} ${isFull}`} onClick={this.props.makeMove.bind(this)}></div>
+      <div className={`${style.cell} ${player} ${isStartLocation} ${isHalf} ${isFull}`} onClick={this.props.makeMove.bind(this)}></div>
     );
   }
 }

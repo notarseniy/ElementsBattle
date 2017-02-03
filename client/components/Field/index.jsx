@@ -2,29 +2,11 @@ import React, { Component } from 'react';
 import Row from '../Row';
 import { ELEMENT_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT } from '../../constants/game.js';
 import style from './style.css';
+import * as Game from '../../lib/game.js';
 
 class Field extends Component {
   constructor(props, context) {
     super(props, context);
-  }
-
-  _getNextPlayer(player) {
-    const { game } = this.props;
-    const players = [
-      PLAYERS.WATER,
-      PLAYERS.AIR,
-      PLAYERS.EARTH,
-      PLAYERS.FIRE
-    ];
-
-    let testPlayer = player + 1;
-
-    while (true) {
-      if (game.players[testPlayer]) return PLAYERS[testPlayer];
-
-      testPlayer++;
-      if (testPlayer > PLAYER_COUNT - 1) testPlayer = 0;
-    }
   }
   
   makeMove() {
@@ -37,7 +19,7 @@ class Field extends Component {
        * | 3 |(4)| 5 |
        * | 6 | 7 | 8 |
        *
-       * (4) — is the target cell
+       * (4) — is the target cell. In next cycle we're pass this cell
        *
        * We're going to check all cells around for some game-specific conditions
        **/
@@ -156,7 +138,7 @@ class Field extends Component {
           error: MOVE_ERROR.NO_CONNECT
         };
       }
-    }
+    };
 
     console.log('makeMove :: this:', this);
     const { game, row, column } = this.props;
@@ -178,8 +160,9 @@ class Field extends Component {
       });
 
       // if remain gone
-      if (game.currentMove.remain === 1) {
-        gamePassNext(this._getNextPlayer(currentPlayer));
+      if (game.currentMove.remain <= 1) {
+        console.log('makeMove - remain <= 1 :: ', game, Game.getNextPlayer(game));
+        gamePassNext(Game.getNextPlayer(game));
         playerIncrementMove(currentPlayer);
       }
     } else {

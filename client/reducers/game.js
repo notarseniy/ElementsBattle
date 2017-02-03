@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 import { PLAYERS, ELEMENT_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS, MOVES_COUNT } from '../constants/game.js';
 import { repeat, map, addIndex, isNil, find, propEq, filter } from 'ramda';
-
+import * as Game from '../lib/game.js';
 
 // TODO: come up with state structure and actions
 function generateInitialState() {
@@ -103,9 +103,18 @@ export default handleActions({
    * @param {boolean} action.payload.fire Is playing or not
    **/
   'GAME_START' (state, action) {
+    const players = generatePlayers(action.payload);
+    
     return {
       ...state,
-      players: generatePlayers(action.payload)
+      currentMove: {
+        ...state.currentMove,
+        player: Game.getNextPlayer({
+          ...state,
+          players
+        })
+      },
+      players
     }
   },
 
@@ -139,10 +148,10 @@ export default handleActions({
 
   /**
    * Pass current move to next player in turn
-   * @param {number} action.payload.player player
+   * @param {number} action.payload player
    **/
   'GAME_PASS_NEXT' (state, action) {
-    const player = action.payload.player;
+    const player = action.payload;
 
     return {
       ...state,
@@ -159,10 +168,10 @@ export default handleActions({
 
   /**
    * Increments moveCount of player
-   * @param {number} action.payload.player Player's id
+   * @param {number} action.payload Player's id
    **/
   'PLAYER_INCREMENT_MOVE' (state, action) {
-    const { player } = action.payload;
+    const player = action.payload;
     let players = state.players;
     
     ++players[player].moveCount;
