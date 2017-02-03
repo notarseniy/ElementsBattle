@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Row from '../Row';
-import { SQUARE_SIDE } from '../../constants/game.js';
+import { ELEMENT_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT } from '../../constants/game.js';
 import style from './style.css';
 
 class Field extends Component {
@@ -8,17 +8,186 @@ class Field extends Component {
     super(props, context);
   }
 
-  _checkMove(row, column, player) {
-    for (let i = 0; i < 8; i++) {
+  _getNextPlayer(player) {
+    const { game } = this.props;
+    const players = [
+      PLAYERS.WATER,
+      PLAYERS.AIR,
+      PLAYERS.EARTH,
+      PLAYERS.FIRE
+    ];
 
+    let testPlayer = player + 1;
+
+    while (true) {
+      if (game.players[testPlayer]) return PLAYERS[testPlayer];
+
+      testPlayer++;
+      if (testPlayer > PLAYER_COUNT - 1) testPlayer = 0;
     }
   }
   
   makeMove() {
-    const { game, actions, children } = this.props;
-    
+    const checkMove = (row, column, player) => {
+      console.log('checkMove :: arguments', row, column, player);
+      /**
+       * Here's visual interpretation of what the fuck is going on:
+       * mask:
+       * | 0 | 1 | 2 |
+       * | 3 |(4)| 5 |
+       * | 6 | 7 | 8 |
+       *
+       * (4) — is the target cell
+       *
+       * We're going to check all cells around for some game-specific conditions
+       **/
+      const mask = [
+        [ -1, -1 ],
+        [ 0, -1 ],
+        [ 1, -1 ],
+        [ -1, 0 ],
+        // ← here's could be 0 0 or (4)
+        [ 1, 0 ],
+        [ -1, 1 ],
+        [ 0, 1 ],
+        [ 1, 1 ]
+      ];
+      const { game } = this.props;
+      const currentCell = game.field[row-1][column-1];
+      let newStatus = null;
+      
+      console.log('makeMove :: currentCell:', currentCell, row, column);
+      // test current position
+      // if current cell is on someone's half (kurgan, курган)
+      if (currentCell.status === ELEMENT_STATUS.HALF) {
+        return {
+          ok: false,
+          error: MOVE_ERROR.SOMEONE_HALF
+        };
+      }
 
+      // if current cell is on our full (golem, голем)
+      if (
+        currentCell.status === ELEMENT_STATUS.FULL &&
+        currentCell.player === player
+      ) {
+        return {
+          ok: false,
+          error: MOVE_ERROR.OUR_FULL
+        };
+      }
+
+      // if this is first move we should check for start position
+      if (
+        game.currentMove.moveCount === 0 &&
+        game.currentMove.remain === MOVES_COUNT
+      ) {
+        if (currentCell.isStartLocation) {
+          return {
+            ok: true,
+            row,
+            column,
+            newStatus: ELEMENT_STATUS.FULL
+          };
+        } else {
+          return {
+            ok: false,
+            error: MOVE_ERROR.NOT_START_CELL
+          };
+        }
+      }
+
+      // check if someones full
+      if (
+        currentCell.status === ELEMENT_STATUS.FULL
+      ) {
+        newStatus = ELEMENT_STATUS.HALF;
+      } else {
+        newStatus = ELEMENT_STATUS.FULL;
+      }
+
+      let isPlayerFullExists = null;
+      // TODO: Check for active connects
+      let isPlayerActiveConnectExists = null;
+
+      for (let i = 0; i < 8; i++) {
+        let testRow = (row - 1) + mask[i][0];
+        let testColumn = (column - 1) + mask[i][1];
+        
+        
+
+        // If out of bounds
+        if (testRow >= 20 || testRow < 0 || testColumn >= 20 || testColumn < 0) {
+          continue;
+        }
+        
+        let testCell = game.field[testRow][testColumn];
+        console.log('makeMove :: testRow:', testRow, ' testColumn:', testColumn, testCell);
+        // our full
+        if (
+          testCell.player === player &&
+          testCell.status === ELEMENT_STATUS.FULL
+        ) {
+          isPlayerFullExists = true;
+        }
+
+        // our half/connect
+        if (
+          testCell.player === player &&
+          testCell.status === ELEMENT_STATUS.HALF
+        ) {
+          // FIXME: check for active connects by game logic
+          isPlayerActiveConnectExists = true;
+        }
+      }
+
+      if (isPlayerFullExists || isPlayerActiveConnectExists) {
+        return {
+          ok: true,
+          row,
+          column,
+          newStatus
+        };
+      } else {
+        return {
+          ok: false,
+          row,
+          column,
+          error: MOVE_ERROR.NO_CONNECT
+        };
+      }
+    }
+
+    console.log('makeMove :: this:', this);
+    const { game, row, column } = this.props;
+    const { cellChangeStatus, gameProcessMove, playerIncrementMove, gamePassNext } = this.props.actions;
+    
+    console.log('makeMove :: enter');
+
+    const currentPlayer = game.currentMove.player;
+    const status = checkMove(row, column, currentPlayer);
+
+    console.log('makeMove :: status: ', status);
+
+    if (status.ok) {
+      gameProcessMove({
+        row,
+        column,
+        newStatus: status.newStatus,
+        player: currentPlayer
+      });
+
+      // if remain gone
+      if (game.currentMove.remain === 1) {
+        gamePassNext(this._getNextPlayer(currentPlayer));
+        playerIncrementMove(currentPlayer);
+      }
+    } else {
+      // TODO: Show error
+      return false;
+    }
   }
+
 
   componentDidMount() {
     const { gameStart } = this.props.actions;
@@ -32,7 +201,7 @@ class Field extends Component {
 
   render() {
     const { game, actions, children } = this.props;
-    const appProps = { game, actions };
+    const appProps = { game, actions, makeMove: this.makeMove };
       
     let rows = [];
     

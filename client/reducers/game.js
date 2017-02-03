@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { PLAYERS, ELEMENT_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS } from '../constants/game.js';
+import { PLAYERS, ELEMENT_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS, MOVES_COUNT } from '../constants/game.js';
 import { repeat, map, addIndex, isNil, find, propEq, filter } from 'ramda';
 
 
@@ -25,9 +25,10 @@ function generateInitialState() {
 
       for (let column = 0; column < SQUARE_SIDE; column++) {
         field[row].push({
-          x: row+1,
-          y: column+1,
+          row: row+1,
+          column: column+1,
           status: ELEMENT_STATUS.EMPTY,
+          player: false,
           isStartLocation: isStartLocation(row+1, column+1)
         });
       }
@@ -37,8 +38,15 @@ function generateInitialState() {
   }
 
   return {
-    // Номер текущего хода, 0 = игра не началась
-    moveCount: 0,
+  
+    // Current move
+    currentMove: {
+      player: null,
+
+      remain: MOVES_COUNT,
+
+      moveCount: 0
+    },
 
     // Текущее состояние поля
     field: generateField(),
@@ -65,7 +73,12 @@ function generatePlayers(players) {
   const makeDefault = (playerId) => (
     {
       id: playerId,
+      // was in game, but lose
       playing: false,
+      /* Number of current move
+       * 0 = game is not started
+       * 1 = first move, and so on
+       **/
       moveCount: 0,
     }
   );
@@ -97,12 +110,47 @@ export default handleActions({
   },
 
   /**
-   * Increments moveCount of game
-   **/
-  'PLAYER_INCREMENT_MOVE' (state, action) {
+   * Decrement remain counter (probably calling this action after move)
+   * @param {number} action.payload.row Cell's row
+   * @param {number} action.payload.column Cell's column
+   * @param {enum} action.payload.newStatus New status of cell
+   * @param {enum} action.payload.player New player of cell
+  **/
+  'GAME_PROCESS_MOVE' (state, action) {
+    const { row, column, newStatus, player } = action.payload;
+    let field = state.field;
+
+    // change cell
+    field[row-1][column-1] = {
+      ...field[row-1][column-1],
+      status: newStatus,
+      player
+    };
+
     return {
       ...state,
-      moveCount: state.moveCount + 1
+      field,
+      currentMove: {
+        ...state.currentMove,
+        remain: state.currentMove.remain - 1
+      }
+    }
+  },
+
+  /**
+   * Pass current move to next player in turn
+   * @param {number} action.payload.player player
+   **/
+  'GAME_PASS_NEXT' (state, action) {
+    const player = action.payload.player;
+
+    return {
+      ...state,
+      currentMove: {
+        player,
+        remain: MOVES_COUNT,
+        moveCount: state.players[player].moveCount
+      }
     };
   },
 
@@ -111,13 +159,13 @@ export default handleActions({
 
   /**
    * Increments moveCount of player
-   * @param {number} action.payload.playerId Player's id
+   * @param {number} action.payload.player Player's id
    **/
   'PLAYER_INCREMENT_MOVE' (state, action) {
-    const { playerId } = action.payload;
+    const { player } = action.payload;
     let players = state.players;
     
-    ++players[playerId].moveCount;
+    ++players[player].moveCount;
 
     return {
       ...state,
@@ -141,23 +189,4 @@ export default handleActions({
     };
   },
 
-  /* CELL */
-
-  /**
-   * Changes cell's status
-   * @param {number} action.payload.row Cell's row
-   * @param {number} action.payload.column Cell's column
-   * @param {enum} action.payload.status New status
-   */
-  'CELL_CHANGE_STATUS' (state, action) {
-    const { row, column, status } = action.payload;
-    let field = state.field;
-    
-    field[row-1][column-1].status = status;
-
-    return {
-      ...state,
-      field
-    }
-  },
 }, generateInitialState())

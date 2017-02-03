@@ -8,6 +8,21 @@ export const PLAYERS = {
   FIRE: 3
 };
 
+export const MOVES_COUNT = 7;
+export const MOVE_ERROR = {
+  // no full or active half's around cell
+  NO_CONNECT: 0,
+  // TODO: use this
+  // there's our half but not connected
+  NO_ACTIVE_CONNECT: 1,
+  // cell is on someone half
+  SOMEONE_HALF: 2,
+  // cell is on our full
+  OUR_FULL: 3,
+  // if first move and 7 remains: cell is not on start
+  NOT_START_CELL: 4
+};
+
 export const ELEMENT_STATUS = {
   EMPTY: 0,
   HALF: 1, // курган
