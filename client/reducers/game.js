@@ -1,21 +1,36 @@
 import { handleActions } from 'redux-actions'
 import { PLAYERS, ELEMENT_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS, MOVES_COUNT } from '../constants/game.js';
-import { repeat, map, addIndex, isNil, find, propEq, filter } from 'ramda';
+import { repeat, map, addIndex, findIndex, equals } from 'ramda';
 import * as Game from '../lib/game.js';
 
 // TODO: come up with state structure and actions
 function generateInitialState() {
-  const isStartLocation = (x, y) => (
-    !isNil(
-      find(
-        propEq('x', x)
-      )(
-        filter(
-          propEq('y', y)
-        )(START_ELEMENTS)
-      )
-    )
+  /**
+   * Get index of start location's element in START_ELEMENTS
+   * @param {number} row Row
+   * @param {number} column Column
+   **/
+  const getStartLocation = (row, column) => (
+    findIndex(
+      equals({
+        x: row,
+        y: column
+      })
+    )(START_ELEMENTS)
   );
+  const getStartLocationPlayer = (index) => {
+    if (index >= 0 && index <= 2) {
+      return PLAYERS.WATER;
+    } else if (index >= 3 && index <= 5) {
+      return PLAYERS.AIR;
+    } else if (index >= 6 && index <= 8) {
+      return PLAYERS.EARTH;
+    } else if (index >= 9 && index <= 11) {
+      return PLAYERS.FIRE;
+    } else {
+      return null;
+    }
+  };
 
   function generateField() {
     let field = [];
@@ -24,12 +39,18 @@ function generateInitialState() {
       field.push([]);
 
       for (let column = 0; column < SQUARE_SIDE; column++) {
+        const startLocation = getStartLocation(row+1, column+1);
+        const isStartLocation = startLocation !== -1;
+        const startLocationPlayer = getStartLocationPlayer(startLocation);
+
+        console.log('generateField :: ', startLocation, isStartLocation, startLocationPlayer);
+
         field[row].push({
           row: row+1,
           column: column+1,
           status: ELEMENT_STATUS.EMPTY,
-          player: false,
-          isStartLocation: isStartLocation(row+1, column+1)
+          player: (isStartLocation) ? startLocationPlayer : false,
+          isStartLocation
         });
       }
     }

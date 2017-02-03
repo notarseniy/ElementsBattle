@@ -1,9 +1,16 @@
 .cell {
+  display: inline-block;
+  height: calc(100% - 2px);
+  width: calc(5% - 2px);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* water */
 .player-0 {
+  &.start {
+    background-color: #1e90ff;
+  }
+
   &.half {
     background-color: #45a3ff;
   }
@@ -14,6 +21,10 @@
 }
 /* air */
 .player-1 {
+  &.start {
+    background-color: #cbcbcb;
+  }
+
   &.half {
     background-color: #a4a4a4;
   }
@@ -24,6 +35,10 @@
 }
 /* earth */
 .player-2 {
+  &.start {
+    background-color: #adebad;
+  }
+  
   &.half {
     background-color: #5fd85f;
   }
@@ -34,6 +49,10 @@
 }
 /* fire */
 .player-3 {
+  &.start {
+    background-color: #f5caca;
+  }
+
   &.half {
     background-color: #e26868;
   }
@@ -41,10 +60,6 @@
   &.full {
     background-color: #b22222;
   }
-}
-
-.start {
-  background: #e18b8b;
 }
 
 .half {

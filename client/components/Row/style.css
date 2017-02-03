@@ -1,4 +1,7 @@
 .row {
-  display: grid;
-  grid-template-columns: repeat(20, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(20, 1fr); */
+  display: block;
+  height: 5%;
+  font-size: 0;
 }
