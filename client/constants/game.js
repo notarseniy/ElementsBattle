@@ -43,11 +43,11 @@ export const START_ELEMENTS = [
   { x: 20, y: 2 },
   { x: 19, y: 1 },
   // Bottom Left — Earth
-  { x: 1, y: 20 },
-  { x: 1, y: 19 },
-  { x: 2, y: 20 },
-  // Bottom Right — Fire
   { x: 20, y: 20 },
   { x: 20, y: 19 },
-  { x: 19, y: 20 }
+  { x: 19, y: 20 },
+  // Bottom Right — Fire
+  { x: 1, y: 20 },
+  { x: 1, y: 19 },
+  { x: 2, y: 20 }
 ];

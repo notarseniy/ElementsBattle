@@ -13,8 +13,8 @@ function generateInitialState() {
   const getStartLocation = (row, column) => (
     findIndex(
       equals({
-        x: row,
-        y: column
+        y: row,
+        x: column
       })
     )(START_ELEMENTS)
   );
