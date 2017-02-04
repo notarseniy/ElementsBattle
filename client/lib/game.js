@@ -89,7 +89,6 @@ export function isHasConnect(row, column, game) {
     cell.closed = true;
 
     console.log('isHasConnect :: cell', cell, openList);
-    if (openList.length > 10) debugger;
     // reached the end position
     if (
       // if start cell
