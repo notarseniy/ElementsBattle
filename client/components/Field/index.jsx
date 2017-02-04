@@ -23,7 +23,6 @@ class Field extends Component {
        *
        * We're going to check all cells around for some game-specific conditions
        **/
-
       const mask = [
         [ -1, -1 ],
         [ 0, -1 ],
