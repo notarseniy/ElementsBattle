@@ -162,6 +162,7 @@ class Field extends Component {
         player: currentPlayer
       });
 
+
       // if remain gone
       if (game.currentMove.remain <= 1) {
         console.log('makeMove - remain <= 1 :: ', game, Game.getNextPlayer(game));
