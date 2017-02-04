@@ -14,8 +14,8 @@ class App extends Component {
     gameStart({
       water: true,
       air: true,
-      earth: true,
-      fire: true
+      //earth: true,
+      //fire: true
     })
   }
 

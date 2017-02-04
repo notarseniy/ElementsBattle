@@ -12,7 +12,7 @@
   }
 
   &.half {
-    background-color: #45a3ff;
+    background-image: linear-gradient(to left top, transparent 48.9%, #45a3ff 51%, #45a3ff 78%, transparent 80% ), linear-gradient(to left top, #45a3ff 28%, transparent 30% );
   }
   
   &.full {
@@ -26,7 +26,7 @@
   }
 
   &.half {
-    background-color: #a4a4a4;
+    background-image: linear-gradient(to left top, transparent 48.9%, #a4a4a4 51%, #a4a4a4 78%, transparent 80% ), linear-gradient(to left top, #a4a4a4 28%, transparent 30% );
   }
   
   &.full {
@@ -40,7 +40,7 @@
   }
   
   &.half {
-    background-color: #5fd85f;
+    background-image: linear-gradient(to left top, transparent 48.9%, #5fd85f 51%, #5fd85f 78%, transparent 80% ), linear-gradient(to left top, #5fd85f 28%, transparent 30% );
   }
   
   &.full {
@@ -54,7 +54,7 @@
   }
 
   &.half {
-    background-color: #e26868;
+    background-image: linear-gradient(to left top, transparent 48.9%, #e26868 51%, #e26868 78%, transparent 80% ), linear-gradient(to left top, #e26868 28%, transparent 30% );
   }
   
   &.full {
@@ -63,7 +63,7 @@
 }
 
 .half {
-  background: #64da7c;
+  background-size: 10px 10px;
 }
 
 .full {
