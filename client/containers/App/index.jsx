@@ -6,6 +6,7 @@ import Field from '../../components/Field';
 import * as GameActions from '../../actions/game';
 import style from './style.css';
 
+
 class App extends Component {
   componentWillMount() {
     const { gameStart } = this.props.actions;
