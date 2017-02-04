@@ -1,0 +1,63 @@
+.player {
+  position: absolute;
+  width: 140px;
+
+  &-0 {
+    text-align: right;
+    top: -22px;
+    right: calc(100% + 6px);
+    color: #1E90FF;
+  }
+
+  &-1 {
+    top: -22px;
+    left: calc(100% + 6px);
+    color: #4A4A4A;
+  }
+
+  &-2 {
+    top: calc(100% + 1px);
+    left: calc(100% + 6px);
+    color: #228B22;
+  }
+
+  &-3 {
+    text-align: right;
+    top: calc(100% + 1px);
+    right: calc(100% + 4px);
+    color: #B22222;
+  }
+}
+
+.current-player {
+  composes: player;
+}
+
+.title {
+  display: inline-block;
+  padding: 0.03em 0.35em 0.15em;
+
+  color: white;
+
+  .player-0 & {
+    background-color: #1E90FF;
+  }
+
+  .player-1 & {
+    background-color: #4A4A4A;
+  }
+
+  .player-2 & {
+    background-color: #228B22;
+  }
+
+  .player-3 & {
+    background-color: #B22222;
+  }
+}
+
+.remain {
+  font-size: 14px;
+  margin-top: 0.18em;
+  margin-left: 0.35em;
+}

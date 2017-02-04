@@ -1,6 +1,10 @@
+@import 'normalize.css';
+
 html, body {
   height: 100%;
   width: 100%;
+  
+  font-family: 'Clear Sans';
 }
 
 .container {
@@ -9,4 +13,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wrap {
+  width: 400px;
+  height: 400px;
 }

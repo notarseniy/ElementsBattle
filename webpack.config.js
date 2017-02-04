@@ -51,10 +51,10 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /client/,
-        use: 'style-loader!css-loader'/*[
+        use: [
           'style-loader',
           'css-loader'
-        ]*/
+        ]
       },
       {
         test: /\.(js|jsx)$/,

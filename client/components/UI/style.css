@@ -1,0 +1,33 @@
+.ui {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  z-index: -1;
+}
+
+.top {
+  position: absolute;
+  width: inherit;
+  text-align: center;
+}
+
+.header {
+  margin: 0;
+  top: -50%;
+  transform: translateY(50%);
+
+  font-size: 36px;
+  font-weight: 400;
+  color: #000000;
+  
+  composes: top;
+}
+
+.move-count {
+  bottom: 100%;
+  margin-bottom: 24px;
+
+  font-size: 18px;
+
+  composes: top;
+}

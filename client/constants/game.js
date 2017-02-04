@@ -11,6 +11,12 @@ export const PLAYERS = {
   2: 2,
   3: 3
 };
+export const PLAYERS_TITLES = {
+  [PLAYERS.WATER]: 'Вода',
+  [PLAYERS.AIR]: 'Воздух',
+  [PLAYERS.EARTH]: 'Земля',
+  [PLAYERS.FIRE]: 'Огонь'
+};
 
 export const MOVES_COUNT = 7;
 export const MOVE_ERROR = {
@@ -35,19 +41,19 @@ export const ELEMENT_STATUS = {
 
 export const START_ELEMENTS = [
   // Top Left — Water
-  { x: 1, y: 1 },
-  { x: 1, y: 2 },
-  { x: 2, y: 1 },
+  { column: 1, row: 1 },
+  { column: 1, row: 2 },
+  { column: 2, row: 1 },
   // Top Right — Air
-  { x: 20, y: 1 },
-  { x: 20, y: 2 },
-  { x: 19, y: 1 },
+  { column: 20, row: 1 },
+  { column: 20, row: 2 },
+  { column: 19, row: 1 },
   // Bottom Left — Earth
-  { x: 20, y: 20 },
-  { x: 20, y: 19 },
-  { x: 19, y: 20 },
+  { column: 20, row: 20 },
+  { column: 20, row: 19 },
+  { column: 19, row: 20 },
   // Bottom Right — Fire
-  { x: 1, y: 20 },
-  { x: 1, y: 19 },
-  { x: 2, y: 20 }
+  { column: 1, row: 20 },
+  { column: 1, row: 19 },
+  { column: 2, row: 20 }
 ];

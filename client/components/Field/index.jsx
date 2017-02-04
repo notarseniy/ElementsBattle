@@ -38,7 +38,7 @@ class Field extends Component {
       const currentCell = game.field[row-1][column-1];
       let newStatus = null;
       
-      console.log('makeMove :: currentCell:', currentCell, row, column);
+      console.log('makeMove :: currentCell:', game.currentMove, currentCell, row, column);
       // test current position
       // if current cell is on someone's half (kurgan, курган)
       if (currentCell.status === ELEMENT_STATUS.HALF) {
@@ -61,10 +61,13 @@ class Field extends Component {
 
       // if this is first move we should check for start position
       if (
-        game.currentMove.moveCount === 0 &&
+        game.currentMove.moveCount === 1 &&
         game.currentMove.remain === MOVES_COUNT
       ) {
-        if (currentCell.isStartLocation) {
+        if (
+          currentCell.isStartLocation &&
+          currentCell.player === game.currentMove.player
+        ) {
           return {
             ok: true,
             row,
@@ -169,17 +172,6 @@ class Field extends Component {
       // TODO: Show error
       return false;
     }
-  }
-
-
-  componentDidMount() {
-    const { gameStart } = this.props.actions;
-
-    // TODO: Make selection UI
-    gameStart({
-      fire: true,
-      air: true
-    })
   }
 
   render() {

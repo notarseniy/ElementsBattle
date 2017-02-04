@@ -1,7 +1,7 @@
 import { PLAYERS, PLAYER_COUNT } from '../constants/game';
 
 export function getNextPlayer(game) {
-  const player = (game.currentMove.player) ? game.currentMove.player : PLAYERS.FIRE;
+  const player = (game.currentMove.player !== null) ? game.currentMove.player : PLAYERS.FIRE;
   const players = [
     PLAYERS.WATER,
     PLAYERS.AIR,

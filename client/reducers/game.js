@@ -13,8 +13,8 @@ function generateInitialState() {
   const getStartLocation = (row, column) => (
     findIndex(
       equals({
-        y: row,
-        x: column
+        row,
+        column
       })
     )(START_ELEMENTS)
   );
@@ -100,7 +100,7 @@ function generatePlayers(players) {
        * 0 = game is not started
        * 1 = first move, and so on
        **/
-      moveCount: 0,
+      moveCount: 1,
     }
   );
 
@@ -130,6 +130,7 @@ export default handleActions({
       ...state,
       currentMove: {
         ...state.currentMove,
+        moveCount: 1,
         player: Game.getNextPlayer({
           ...state,
           players
