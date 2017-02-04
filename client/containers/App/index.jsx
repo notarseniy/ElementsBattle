@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import UI from '../../components/UI';
 import Field from '../../components/Field';
+import Copyright from '../../components/Copyright';
 import * as GameActions from '../../actions/game';
 import style from './style.css';
 
@@ -15,8 +16,8 @@ class App extends Component {
     gameStart({
       water: true,
       air: true,
-      //earth: true,
-      //fire: true
+      earth: true,
+      fire: true
     })
   }
 
@@ -29,6 +30,7 @@ class App extends Component {
         <div className={style.wrap}>
           <UI {...appProps} />
           <Field {...appProps} />
+          <Copyright />
         </div>
       </div>
     );

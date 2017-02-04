@@ -31,6 +31,10 @@
 
 .current-player {
   composes: player;
+
+  &.player-0 {
+    right: calc(100% + 20px);
+  }
 }
 
 .title {

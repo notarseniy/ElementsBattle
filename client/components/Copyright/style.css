@@ -1,0 +1,15 @@
+.copyright {
+  position: fixed;
+  bottom: 25px;
+  width: inherit;
+  text-align: center;
+  font-size: 16px;
+
+  a {
+    color: black;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
