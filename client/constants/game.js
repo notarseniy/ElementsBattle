@@ -33,7 +33,7 @@ export const MOVE_ERROR = {
   NOT_START_CELL: 4
 };
 
-export const ELEMENT_STATUS = {
+export const CELL_STATUS = {
   EMPTY: 0,
   HALF: 1, // курган
   FULL: 2 // голем

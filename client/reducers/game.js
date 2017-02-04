@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { PLAYERS, ELEMENT_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS, MOVES_COUNT } from '../constants/game.js';
+import { PLAYERS, CELL_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS, MOVES_COUNT } from '../constants/game.js';
 import { repeat, map, addIndex, findIndex, equals } from 'ramda';
 import * as Game from '../lib/game.js';
 
@@ -48,7 +48,7 @@ function generateInitialState() {
         field[row].push({
           row: row+1,
           column: column+1,
-          status: ELEMENT_STATUS.EMPTY,
+          status: CELL_STATUS.EMPTY,
           player: (isStartLocation) ? startLocationPlayer : false,
           isStartLocation
         });

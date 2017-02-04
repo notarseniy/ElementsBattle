@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isNil, find, propEq, filter } from 'ramda';
-import { ELEMENT_STATUS, START_ELEMENTS } from '../../constants/game.js';
+import { CELL_STATUS, START_ELEMENTS } from '../../constants/game.js';
 import style from './style.css';
 
 class Cell extends Component {
@@ -14,8 +14,8 @@ class Cell extends Component {
     const cell = game.field[row-1][column-1];
 
     const isStartLocation = (!!cell.isStartLocation) ? style.start : '';
-    const isHalf = (cell.status === ELEMENT_STATUS.HALF) ? style.half : '';
-    const isFull = (cell.status === ELEMENT_STATUS.FULL) ? style.full : '';
+    const isHalf = (cell.status === CELL_STATUS.HALF) ? style.half : '';
+    const isFull = (cell.status === CELL_STATUS.FULL) ? style.full : '';
     const player = (cell.player !== false) ? style['player' + cell.player] : '';
 
     return (
