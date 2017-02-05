@@ -1,0 +1,43 @@
+.page {
+  
+}
+
+.header {
+  font-size: 50px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.small-header {
+  font-size: 0.5em;
+  line-height: 0.8;
+}
+
+.description {
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 10px 0 22px;
+}
+
+.form {
+  display: flex;
+  margin-bottom: 16px;
+  font-size: 16px;
+
+  &-header {
+    font-weight: 400;
+    margin: 0 0 5px;
+  }
+
+  &-element {
+    margin-right: 12px;
+  }
+
+  &-input {
+    margin-right: 4px;
+  }
+}
+
+.startLink {
+  padding: 10px 22px;
+}

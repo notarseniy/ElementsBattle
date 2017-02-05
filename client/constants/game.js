@@ -17,6 +17,12 @@ export const PLAYERS_TITLES = {
   [PLAYERS.EARTH]: 'Земля',
   [PLAYERS.FIRE]: 'Огонь'
 };
+export const PLAYERS_NAMES = {
+  [PLAYERS.WATER]: 'water',
+  [PLAYERS.AIR]: 'air',
+  [PLAYERS.EARTH]: 'earth',
+  [PLAYERS.FIRE]: 'fire'
+};
 
 export const MOVES_COUNT = 7;
 export const MOVE_ERROR = {

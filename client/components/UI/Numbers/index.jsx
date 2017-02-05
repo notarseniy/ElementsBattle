@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import style from './style.css';
-import { SQUARE_SIDE } from '../../constants/game';
+import { SQUARE_SIDE } from '../../../constants/game';
 
-class NumbersUI extends Component {
+class Numbers extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -24,4 +24,4 @@ class NumbersUI extends Component {
   }
 }
 
-export default NumbersUI;
+export default Numbers;

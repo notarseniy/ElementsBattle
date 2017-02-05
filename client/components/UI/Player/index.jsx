@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import style from './style.css';
-import { PLAYERS, PLAYERS_TITLES } from '../../constants/game';
-import { numberDeclination } from '../../lib/utils';
+import { PLAYERS, PLAYERS_TITLES } from '../../../constants/game';
+import { numberDeclination } from '../../../lib/utils';
 
-class PlayerUI extends Component {
+class Player extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -37,4 +37,4 @@ class PlayerUI extends Component {
   }
 }
 
-export default PlayerUI;
+export default Player;

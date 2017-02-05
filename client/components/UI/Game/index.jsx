@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { PLAYERS, PLAYER_COUNT } from '../../constants/game';
 import style from './style.css';
-import PlayerUI from '../PlayerUI';
-import NumbersUI from '../NumbersUI';
-import { numberDeclination, numberEnding } from '../../lib/utils';
+import { PLAYERS, PLAYER_COUNT } from '../../../constants/game';
+import Player from '../Player';
+import Numbers from '../Numbers';
+import { numberDeclination, numberEnding } from '../../../lib/utils';
 
-class UI extends Component {
+class Game extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -20,7 +20,7 @@ class UI extends Component {
         const current = (game.currentMove.player === player) ? game.currentMove : false;
 
         $players.push(
-          <PlayerUI key={player} player={game.players[player]} current={current} />
+          <Player key={player} player={game.players[player]} current={current} />
         );
       }
     }
@@ -30,8 +30,8 @@ class UI extends Component {
         <h1 className={style.header}>Битва стихий</h1>
         <div className={style.moveCount}>{this.renderMoveCount(game.currentMove.moveCount)}</div>
         {$players}
-        <NumbersUI isVertical={true} />
-        <NumbersUI isVertical={false} />
+        <Numbers isVertical={true} />
+        <Numbers isVertical={false} />
       </div>
     );
   }
@@ -45,4 +45,4 @@ class UI extends Component {
   }
 }
 
-export default UI;
+export default Game;

@@ -59,7 +59,6 @@ function generateInitialState() {
   }
 
   return {
-  
     // Current move
     currentMove: {
       player: null,
@@ -115,7 +114,7 @@ function generatePlayers(players) {
 export default handleActions({
 
   /* GAME */
-
+  
   /**
    * Set players config
    * @param {boolean} action.payload.water Is playing or not
