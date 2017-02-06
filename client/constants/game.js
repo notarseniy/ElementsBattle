@@ -8,6 +8,7 @@ export const KEYS = {
   RIGHT: 39
 };
 
+export const PRESS_LOOP_INTERNAL_SPEED = 5;
 export const PRESS_LOOP_SPEED = 100;
 
 export const PLAYER_COUNT = 4;

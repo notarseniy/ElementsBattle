@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Row from '../Row';
-import { CELL_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT, KEYS, PRESS_LOOP_SPEED } from '../../constants/game.js';
+import { CELL_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT, KEYS, PRESS_LOOP_SPEED, PRESS_LOOP_INTERNAL_SPEED } from '../../constants/game.js';
 import style from './style.css';
 import * as Game from '../../lib/game.js';
 import { map, repeat } from 'ramda';
@@ -14,16 +14,18 @@ class Field extends Component {
     this.focusedCell = [0, 0];
   }
   
-  makeMove() {
-    const { game, row, column } = this.props;
+  makeMove(row, column) {
+    const { game } = this.props;
     const { cellChangeStatus, gameProcessMove, playerIncrementMove, gamePassNext } = this.props.actions;
     
-    console.log('makeMove :: enter');
+    console.log('makeMove :: enter', this);
 
     const currentPlayer = game.currentMove.player;
     const status = Game.checkMove(row, column, game);
 
     console.log('makeMove :: status: ', status);
+
+    this.focusCell(row, column);
 
     if (status.ok) {
       gameProcessMove({
@@ -50,8 +52,14 @@ class Field extends Component {
   }
 
   focusCell(row, column) {
-    this.cellRefs[row-1][column-1].focus();
+    // don't waste energy if nothing changes
+    if (
+      this.focusedCell[0] === row &&
+      this.focusedCell[1] === column
+    ) return;
+
     this.focusedCell = [row, column];
+    this.cellRefs[row-1][column-1].focus();
   }
 
   moveFocusCell(keyPressed) {
@@ -132,6 +140,7 @@ class Field extends Component {
       [KEYS.LEFT]: false,
       [KEYS.RIGHT]: false
     };
+    let canPress = true;;
 
     document.addEventListener('keydown', (event) => {
       keyPressed[event.keyCode] = true;
@@ -142,17 +151,24 @@ class Field extends Component {
     });
 
     const pressLoop = () => {
-      this.moveFocusCell(keyPressed);
+      if (canPress) this.moveFocusCell(keyPressed);
+      canPress = false;
 
-      setTimeout(pressLoop, PRESS_LOOP_SPEED);
-    }
+      setTimeout(pressLoop, PRESS_LOOP_INTERNAL_SPEED);
+    };
+    const checkPressLoop = () => {
+      canPress = true;
 
+      setTimeout(checkPressLoop, PRESS_LOOP_SPEED);
+    };
+    
+    checkPressLoop();
     pressLoop();
   }
 
   render() {
     const { game, actions, children } = this.props;
-    const appProps = { game, actions, makeMove: this.makeMove, setCellRefs: this.setCellRefs, fieldContext: this };
+    const appProps = { game, actions, makeMove: this.makeMove, focusCell: this.focusCell, setCellRefs: this.setCellRefs, fieldContext: this };
     
     let rows = [];
     

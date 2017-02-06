@@ -10,6 +10,18 @@ class Cell extends Component {
     this.refHandler = this.refHandler.bind(this);
   }
 
+  handleClick() {
+    const { row, column, makeMove, fieldContext } = this.props;
+
+    makeMove.call(fieldContext, row, column);
+  }
+
+  handleFocus() {
+    const { row, column, focusCell, fieldContext } = this.props;
+
+    focusCell.call(fieldContext, row, column);
+  }
+
   refHandler(ref) {
     this.cellRef = ref;
   }
@@ -35,7 +47,8 @@ class Cell extends Component {
         className={`${style.cell} ${player} ${isStartLocation} ${isHalf} ${isFull}`}
         type="button"
         role="gridcell"
-        onClick={this.props.makeMove.bind(this)}
+        onClick={this.handleClick.bind(this)}
+        onFocus={this.handleFocus.bind(this)}
         ref={this.refHandler}
       ></button>
     );

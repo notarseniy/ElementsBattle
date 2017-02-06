@@ -10,8 +10,8 @@ class Row extends Component {
 
   render() {
     let elements = [];
-    const { game, actions, row, makeMove } = this.props;
-    const appProps = { game, actions, makeMove, setCellRefs: this.props.setCellRefs, fieldContext: this.props.fieldContext };
+    const { game, actions, row, makeMove, focusCell, setCellRefs, fieldContext } = this.props;
+    const appProps = { game, actions, makeMove, focusCell, setCellRefs, fieldContext };
     
     for (let column = 1; column <= SQUARE_SIDE; column++) {
       elements.push(
