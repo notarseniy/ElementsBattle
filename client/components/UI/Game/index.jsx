@@ -38,7 +38,7 @@ class Game extends Component {
 
   renderMoveCount(moveCount) {
     if (moveCount !== 0) {
-      return `Идёт ${moveCount}${numberEnding(moveCount)} ход`
+      return `Идёт ${moveCount}-й ход`
     } else {
       return 'Начните игру';
     }
