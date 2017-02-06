@@ -1,4 +1,12 @@
+// FIXME: rename to 'FIELD_SIZE'
 export const SQUARE_SIDE = 20;
+
+export const KEYS = {
+  UP: 38,
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39
+};
 
 export const PLAYER_COUNT = 4;
 export const PLAYERS = {

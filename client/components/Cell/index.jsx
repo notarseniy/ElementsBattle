@@ -6,8 +6,20 @@ import style from './style.css';
 class Cell extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.refHandler = this.refHandler.bind(this);
   }
-  
+
+  refHandler(ref) {
+    this.cellRef = ref;
+  }
+
+  componentDidMount() {
+    const { row, column, setCellRefs, fieldContext } = this.props;
+
+    setCellRefs.call(fieldContext, row, column, this.cellRef);
+  }
+
   render() {
     const { game, actions, row, column, makeMove } = this.props;
 
@@ -19,7 +31,13 @@ class Cell extends Component {
     const player = (cell.player !== false) ? style['player' + cell.player] : '';
 
     return (
-      <div className={`${style.cell} ${player} ${isStartLocation} ${isHalf} ${isFull}`} onClick={this.props.makeMove.bind(this)}></div>
+      <button
+        className={`${style.cell} ${player} ${isStartLocation} ${isHalf} ${isFull}`}
+        type="button"
+        role="gridcell"
+        onClick={this.props.makeMove.bind(this)}
+        ref={this.refHandler}
+      ></button>
     );
   }
 }

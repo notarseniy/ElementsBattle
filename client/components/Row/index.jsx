@@ -8,23 +8,24 @@ class Row extends Component {
     super(props, context);
   }
 
-  handleClick() {
-    console.log('test');
-  }
-  
   render() {
     let elements = [];
-    const { game, actions, makeMove } = this.props;
-    const appProps = { game, actions, makeMove };
-
+    const { game, actions, row, makeMove } = this.props;
+    const appProps = { game, actions, makeMove, setCellRefs: this.props.setCellRefs, fieldContext: this.props.fieldContext };
+    
     for (let column = 1; column <= SQUARE_SIDE; column++) {
       elements.push(
-        <Cell key={column-1} row={this.props.row} column={column} {...appProps} />
+        <Cell
+          key={column-1}
+          row={row}
+          column={column}
+          {...appProps}
+        />
       );
     }
     
     return (
-      <div className={style.row}>
+      <div className={style.row} role="row">
         {elements}
       </div>
     );

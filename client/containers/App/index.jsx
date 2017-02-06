@@ -8,7 +8,7 @@ import style from './style.css';
 class App extends Component {
   render() {
     const { game, actions, children } = this.props;
-    
+
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
        game,
@@ -17,10 +17,10 @@ class App extends Component {
     );
 
     return (
-      <div className={style.container}>
+      <main className={style.container}>
         {childrenWithProps}
         <Copyright />
-      </div>
+      </main>
     );
   }
 }
