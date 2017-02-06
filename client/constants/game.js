@@ -8,6 +8,8 @@ export const KEYS = {
   RIGHT: 39
 };
 
+export const PRESS_LOOP_SPEED = 100;
+
 export const PLAYER_COUNT = 4;
 export const PLAYERS = {
   WATER: 0,

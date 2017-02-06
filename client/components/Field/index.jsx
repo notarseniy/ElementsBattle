@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Row from '../Row';
-import { CELL_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT, KEYS } from '../../constants/game.js';
+import { CELL_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT, KEYS, PRESS_LOOP_SPEED } from '../../constants/game.js';
 import style from './style.css';
 import * as Game from '../../lib/game.js';
 import { map, repeat } from 'ramda';
@@ -54,33 +54,61 @@ class Field extends Component {
     this.focusedCell = [row, column];
   }
 
-  moveFocusCell(keyCode) {
+  moveFocusCell(keyPressed) {
     const row = this.focusedCell[0];
     const column = this.focusedCell[1];
-    
-    switch (event.keyCode) {
-      case KEYS.UP:
+
+    switch (true) {
+      case keyPressed[KEYS.UP] && keyPressed[KEYS.LEFT]:
+        if (row === 1 || column === 1) break;
+        this.focusCell(
+          row - 1,
+          column - 1
+        );
+        break;
+      case keyPressed[KEYS.UP] && keyPressed[KEYS.RIGHT]:
+        if (row === 1 || column === SQUARE_SIDE) break;
+        this.focusCell(
+          row - 1,
+          column + 1
+        );
+        break;
+      case keyPressed[KEYS.DOWN] && keyPressed[KEYS.LEFT]:
+        if (row === SQUARE_SIDE || column === 1) break;
+        this.focusCell(
+          row + 1,
+          column - 1
+        );
+        break;
+      case keyPressed[KEYS.DOWN] && keyPressed[KEYS.RIGHT]:
+        if (row === SQUARE_SIDE || column === SQUARE_SIDE) break;
+        this.focusCell(
+          row + 1,
+          column + 1
+        );
+        break;
+      case keyPressed[KEYS.UP]:
         if (row === 1) break;
         this.focusCell(
           row - 1,
           column
         );
         break;
-      case KEYS.DOWN:
+      case keyPressed[KEYS.DOWN]:
         if (row === SQUARE_SIDE) break;
         this.focusCell(
           row + 1,
           column
         );
         break;
-      case KEYS.LEFT:
+      case keyPressed[KEYS.LEFT]:
         if (column === 1) break;
         this.focusCell(
           row,
           column - 1
         );
         break;
-      case KEYS.RIGHT:
+      case keyPressed[KEYS.RIGHT]:
         if (column === SQUARE_SIDE) break;
         this.focusCell(
           row,
@@ -98,9 +126,28 @@ class Field extends Component {
     // set 1,1 cell as :focus
     this.focusCell(1, 1);
 
+    let keyPressed = {
+      [KEYS.UP]: false,
+      [KEYS.DOWN]: false,
+      [KEYS.LEFT]: false,
+      [KEYS.RIGHT]: false
+    };
+
     document.addEventListener('keydown', (event) => {
-      this.moveFocusCell(event.keyCode);
+      keyPressed[event.keyCode] = true;
     });
+
+    document.addEventListener('keyup', (event) => {
+      keyPressed[event.keyCode] = false;
+    });
+
+    const pressLoop = () => {
+      this.moveFocusCell(keyPressed);
+
+      setTimeout(pressLoop, PRESS_LOOP_SPEED);
+    }
+
+    pressLoop();
   }
 
   render() {
