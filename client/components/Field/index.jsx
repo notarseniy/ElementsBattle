@@ -58,7 +58,6 @@ class Field extends Component {
     const row = this.focusedCell[0];
     const column = this.focusedCell[1];
     
-    
     switch (event.keyCode) {
       case KEYS.UP:
         if (row === 1) break;
