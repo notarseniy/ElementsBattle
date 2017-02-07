@@ -19,7 +19,8 @@ module.exports = {
       'react-redux',
       'react-router',
       'react-router-redux',
-      'redux'
+      'redux',
+      'ramda'
     ]
   },
   output: {
