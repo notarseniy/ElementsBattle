@@ -8,6 +8,8 @@ var ExtractStyles = new ExtractTextPlugin('main.css');
 var host = (process.env.HOST || 'localhost');
 var port = (+process.env.PORT) || 3000;
 
+var isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
   context: path.join(__dirname, './client'),
   entry: {
@@ -27,7 +29,7 @@ module.exports = {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
     //prod: publicPath: 'http://' + host + ':' + port + '/ElementsBattle/'
-    publicPath: 'http://' + host + ((process.env.NODE_ENV !== 'production') ? (':' + port) : '' ) + '/'
+    publicPath: 'http://' + host + ((isProduction) ? (':' + port) : '' ) + '/' + ((isProduction) ? 'static/' : '')
   },
   module: {
     rules: [
