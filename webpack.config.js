@@ -29,7 +29,7 @@ module.exports = {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
     //prod: publicPath: 'http://' + host + ':' + port + '/ElementsBattle/'
-    publicPath: 'http://' + host + ((isProduction) ? (':' + port) : '' ) + '/' + ((isProduction) ? 'static/' : '')
+    publicPath: 'http://' + host + ((!isProduction) ? (':' + port) : '' ) + '/' + ((isProduction) ? 'static/' : '')
   },
   module: {
     rules: [
