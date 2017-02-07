@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import style from './style.css';
+import pageStyle from '../style.css';
 import playerUIstyle from '../../components/UI/Player/style.css';
 import { Link, browserHistory } from 'react-router';
 import { PLAYERS_NAMES, PLAYER_COUNT, PLAYERS_TITLES } from '../../constants/game';
 
-class Start extends Component {
+class Select extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -29,11 +30,8 @@ class Start extends Component {
     });
   }
 
-  handleLinkClick(event) {
+  handleButtonClick(event) {
     const { gameStart } = this.props.actions;
-    
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
 
     if (this.state.playersLength > 1) {
       gameStart(this.state);
@@ -48,18 +46,15 @@ class Start extends Component {
     const appProps = { game, actions };
 
     return (
-      <div className={style.page}>
-        <h1 className={style.header}>
-          <div className={style.smallHeader}>Добро пожаловать на </div>
-          Битву Стихий!
-        </h1>
-        <p className={style.description}>
+      <div className={pageStyle.page}>
+        <h1 className={pageStyle.pageHeader}>Выбрать игроков</h1>
+        <p className={pageStyle.text}>
           Битва Стихий — это пошаговая стратегия для двух, трех или четырех игроков.<br />
           Каждый игрок — представитель одной из четырёх стихий.
         </p>
         <h3 className={style.formHeader}>Выберите стороны света</h3>
         {this.renderForm()}
-        <button onClick={::this.handleLinkClick} className={style.startButton}>Начать игру</button>
+        <button className={pageStyle.button} onClick={::this.handleButtonClick}>Начать игру</button>
       </div>
     );
   }
@@ -83,4 +78,4 @@ class Start extends Component {
   }
 }
 
-export default Start;
+export default Select;

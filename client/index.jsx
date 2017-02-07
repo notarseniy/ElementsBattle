@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 
 import App from 'containers/App';
-import Start from 'pages/Start';
+import Index from 'pages/Index';
+import Select from 'pages/Select';
 import Game from 'pages/Game';
 
 import configure from './store';
@@ -17,7 +18,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route component={App}>
-        <Route path="/" component={Start} />
+        <Route path="/" component={Index} />
+        <Route path="/select" component={Select} />
         <Route path="/play" component={Game} />
       </Route>
     </Router>

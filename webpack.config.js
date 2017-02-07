@@ -1,6 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = new require("extract-text-webpack-plugin");
+
+var ExtractStyles = new ExtractTextPlugin('main.css');
 
 var host = (process.env.HOST || 'localhost');
 var port = (+process.env.PORT) || 3000;
@@ -34,28 +37,17 @@ module.exports = {
       {
         test: /\.css$/,
         include: /client/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              camelCase: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[local]___[hash:base64:5]'
-            }
-          },
+        use: ExtractStyles.extract([
+          'css-loader?modules&camelCase&sourceMap&importLoaders=1&localIdentName=[local]___[hash:base64:5]&minimize',
           'postcss-loader'
-        ],
+        ]),
       },
       {
         test: /\.css$/,
         exclude: /client/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ExtractStyles.extract({
+          use: 'css-loader'
+        })
       },
       {
         test: /\.(js|jsx)$/,
@@ -84,15 +76,17 @@ module.exports = {
     ],
   },
   plugins: [
+    ExtractStyles,
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}, output: {comments: false}})
   ],
   devServer: {
     contentBase: './client',
     hot: true
   },
-  devtool: '#cheap-eval-source-map'
+  devtool: (process.env.NODE_ENV === 'production') ? '#source-map' : 'eval'
  
 }
