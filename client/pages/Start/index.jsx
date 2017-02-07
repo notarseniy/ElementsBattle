@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import style from './style.css';
+import playerUIstyle from '../../components/UI/Player/style.css';
 import { Link, browserHistory } from 'react-router';
 import { PLAYERS_NAMES, PLAYER_COUNT, PLAYERS_TITLES } from '../../constants/game';
 
@@ -57,10 +58,8 @@ class Start extends Component {
           Каждый игрок — представитель одной из четырёх стихий.
         </p>
         <h3 className={style.formHeader}>Выберите стороны света</h3>
-        <div className={style.form}>
-          {this.renderForm()}
-        </div>
-        <button onClick={::this.handleLinkClick} className={style.startLink}>Начать игру</button>
+        {this.renderForm()}
+        <button onClick={::this.handleLinkClick} className={style.startButton}>Начать игру</button>
       </div>
     );
   }
@@ -70,13 +69,17 @@ class Start extends Component {
 
     for (let player = 0; player < PLAYER_COUNT; player++) {
       $form.push(
-        <div key={player} className={style.formElement}>
+        <div key={player} className={`${style.formElement} ${playerUIstyle['player-' + player]}`}>
           <label><input className={style.formInput} type="checkbox" name={PLAYERS_NAMES[player]} onChange={::this.handlePlayersCheckboxChange} />{PLAYERS_TITLES[player]}</label>
         </div>
       );
     }
 
-    return $form;
+    return (
+      <div className={style.form}>
+        {$form}
+      </div>
+    );
   }
 }
 

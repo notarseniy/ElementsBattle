@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Row from '../Row';
-import { CELL_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT, KEYS, PRESS_LOOP_SPEED, PRESS_LOOP_INTERNAL_SPEED } from '../../constants/game.js';
+import { CELL_STATUS, SQUARE_SIDE, MOVE_ERROR, MOVES_COUNT, PLAYERS, PLAYER_COUNT, KEYS, PRESS_LOOP_SPEED, PRESS_LOOP_INTERNAL_SPEED, UNDO_COUNT } from '../../constants/game.js';
 import style from './style.css';
 import * as Game from '../../lib/game.js';
-import { map, repeat } from 'ramda';
+import { times } from 'ramda';
 
 class Field extends Component {
   constructor(props, context) {
     super(props, context);
 
     // Refs of all cells
-    this.cellRefs = map(() => repeat(null, 20), new Array(SQUARE_SIDE));
+    this.cellRefs = times(() => times(() => null, SQUARE_SIDE), SQUARE_SIDE);
     this.focusedCell = [0, 0];
   }
   
@@ -20,7 +20,7 @@ class Field extends Component {
     
     console.log('makeMove :: enter', this);
 
-    const currentPlayer = game.currentMove.player;
+    const currentPlayer = game.currentPlayer.player;
     const status = Game.checkMove(row, column, game);
 
     console.log('makeMove :: status: ', status);
@@ -36,7 +36,7 @@ class Field extends Component {
       });
 
       // if remain gone
-      if (game.currentMove.remain <= 1) {
+      if (game.currentPlayer.remain <= 1) {
         console.log('makeMove - remain <= 1 :: ', game, Game.getNextPlayer(game));
         gamePassNext(Game.getNextPlayer(game));
         playerIncrementMove(currentPlayer);
@@ -60,6 +60,22 @@ class Field extends Component {
 
     this.focusedCell = [row, column];
     this.cellRefs[row-1][column-1].focus();
+  }
+
+  undoMove(keyPress) {
+    let { game } = this.props;
+    let { gameUndoMove } = this.props.actions;
+
+    if (
+      keyPress[KEYS.BACKSPACE] &&
+      game.currentPlayer.undoCount < UNDO_COUNT &&
+      game.currentPlayer.remain !== 7
+    ) {
+      gameUndoMove();
+    } else {
+      // FIXME: Make error message
+      return;
+    }
   }
 
   moveFocusCell(keyPressed) {
@@ -138,7 +154,8 @@ class Field extends Component {
       [KEYS.UP]: false,
       [KEYS.DOWN]: false,
       [KEYS.LEFT]: false,
-      [KEYS.RIGHT]: false
+      [KEYS.RIGHT]: false,
+      [KEYS.BACKSPACE]: false
     };
     let canPress = true;;
 
@@ -151,7 +168,10 @@ class Field extends Component {
     });
 
     const pressLoop = () => {
-      if (canPress) this.moveFocusCell(keyPressed);
+      if (canPress) {
+        this.undoMove(keyPressed);
+        this.moveFocusCell(keyPressed);
+      }
       canPress = false;
 
       setTimeout(pressLoop, PRESS_LOOP_INTERNAL_SPEED);

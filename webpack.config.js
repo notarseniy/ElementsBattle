@@ -22,7 +22,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
-    //publicPath: 'http://' + host + ':' + port + '/ElementsBattle/'
+    //prod: publicPath: 'http://' + host + ':' + port + '/ElementsBattle/'
+    publicPath: 'http://' + host + ':' + port + '/'
   },
   module: {
     rules: [
@@ -76,7 +77,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css'],
+    extensions: ['.js', '.jsx', '.json', '.css', '.png', '.jpg'],
     modules: [
       path.join(__dirname, 'client'),
       'node_modules'

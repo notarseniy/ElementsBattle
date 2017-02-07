@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server -d --history-api-fallback --hot --display-error-detail --inline --progress --profile --colors --port 3000",
+    "start": "webpack-dev-server -d --history-api-fallback --hot --display-error-details --inline --progress --profile --colors --port 3000",
     "build": "NODE_ENV=production webpack --progress --colors"
   },
   "license": "MIT",

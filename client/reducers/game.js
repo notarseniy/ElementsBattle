@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions'
 import { PLAYERS, CELL_STATUS, SQUARE_SIDE, PLAYER_COUNT, START_ELEMENTS, MOVES_COUNT } from '../constants/game.js';
-import { repeat, map, addIndex, findIndex, equals } from 'ramda';
+import { repeat, map, addIndex, findIndex, equals, dropLast } from 'ramda';
 import * as Game from '../lib/game.js';
 
 // TODO: come up with state structure and actions
@@ -59,13 +59,20 @@ function generateInitialState() {
   }
 
   return {
-    // Current move
-    currentMove: {
+    // Current player
+    currentPlayer: {
       player: null,
 
+      // number of remain moves
       remain: MOVES_COUNT,
 
-      moveCount: 0
+      moveCount: 0,
+
+      undoCount: 0,
+
+      // history of moves. need for undo
+      // { old: {}, new: {} }
+      history: []
     },
 
     // Текущее состояние поля
@@ -127,8 +134,8 @@ export default handleActions({
     
     return {
       ...state,
-      currentMove: {
-        ...state.currentMove,
+      currentPlayer: {
+        ...state.currentPlayer,
         moveCount: 1,
         player: Game.getNextPlayer({
           ...state,
@@ -140,7 +147,7 @@ export default handleActions({
   },
 
   /**
-   * Decrement remain counter (probably calling this action after move)
+   * Make move
    * @param {number} action.payload.row Cell's row
    * @param {number} action.payload.column Cell's column
    * @param {enum} action.payload.newStatus New status of cell
@@ -149,6 +156,7 @@ export default handleActions({
   'GAME_PROCESS_MOVE' (state, action) {
     const { row, column, newStatus, player } = action.payload;
     let field = state.field;
+    const oldField = field[row-1][column-1];
 
     // change cell
     field[row-1][column-1] = {
@@ -160,11 +168,42 @@ export default handleActions({
     return {
       ...state,
       field,
-      currentMove: {
-        ...state.currentMove,
-        remain: state.currentMove.remain - 1
+      currentPlayer: {
+        ...state.currentPlayer,
+        remain: state.currentPlayer.remain - 1,
+        history: [
+          ...state.currentPlayer.history,
+          {
+            old: oldField,
+            new: field[row-1][column-1]
+          }
+        ]
       }
     }
+  },
+
+  /**
+   * Undo move
+   **/
+  'GAME_UNDO_MOVE' (state, action) {
+    let field = state.field;
+    const history = state.currentPlayer.history;
+    const lastMove = history[history.length - 1];
+    const row = lastMove.old.row;
+    const column = lastMove.old.column;
+
+    field[row-1][column-1] = lastMove.old;
+
+    return {
+      ...state,
+      field,
+      currentPlayer: {
+        ...state.currentPlayer,
+        remain: state.currentPlayer.remain + 1,
+        undoCount: state.currentPlayer.undoCount + 1,
+        history: dropLast(1, history)
+      }
+    };
   },
 
   /**
@@ -176,10 +215,12 @@ export default handleActions({
 
     return {
       ...state,
-      currentMove: {
+      currentPlayer: {
         player,
         remain: MOVES_COUNT,
-        moveCount: state.players[player].moveCount
+        moveCount: state.players[player].moveCount,
+        // flush history, because undo works only for current player
+        history: []
       }
     };
   },

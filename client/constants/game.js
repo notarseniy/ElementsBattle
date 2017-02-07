@@ -5,7 +5,8 @@ export const KEYS = {
   UP: 38,
   DOWN: 40,
   LEFT: 37,
-  RIGHT: 39
+  RIGHT: 39,
+  BACKSPACE: 8
 };
 
 export const PRESS_LOOP_INTERNAL_SPEED = 5;
@@ -50,6 +51,8 @@ export const MOVE_ERROR = {
   NOT_START_CELL: 4
 };
 
+export const UNDO_COUNT = 1;
+
 export const CELL_STATUS = {
   EMPTY: 0,
   HALF: 1, // курган
@@ -62,15 +65,15 @@ export const START_ELEMENTS = [
   { column: 1, row: 2 },
   { column: 2, row: 1 },
   // Top Right — Air
-  { column: 20, row: 1 },
-  { column: 20, row: 2 },
-  { column: 19, row: 1 },
+  { column: SQUARE_SIDE, row: 1 },
+  { column: SQUARE_SIDE, row: 2 },
+  { column: SQUARE_SIDE - 1, row: 1 },
   // Bottom Left — Earth
-  { column: 20, row: 20 },
-  { column: 20, row: 19 },
-  { column: 19, row: 20 },
+  { column: SQUARE_SIDE, row: SQUARE_SIDE },
+  { column: SQUARE_SIDE, row: SQUARE_SIDE - 1 },
+  { column: SQUARE_SIDE - 1, row: SQUARE_SIDE },
   // Bottom Right — Fire
-  { column: 1, row: 20 },
-  { column: 1, row: 19 },
-  { column: 2, row: 20 }
+  { column: 1, row: SQUARE_SIDE },
+  { column: 1, row: SQUARE_SIDE - 1 },
+  { column: 2, row: SQUARE_SIDE }
 ];

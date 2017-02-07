@@ -2,7 +2,7 @@ import { clone } from 'ramda';
 import { PLAYERS, PLAYER_COUNT, CELL_STATUS, MOVES_COUNT, MOVE_ERROR } from '../constants/game';
 
 export function getNextPlayer(game) {
-  const player = (game.currentMove.player !== null) ? game.currentMove.player : PLAYERS.FIRE;
+  const player = (game.currentPlayer.player !== null) ? game.currentPlayer.player : PLAYERS.FIRE;
   const players = [
     PLAYERS.WATER,
     PLAYERS.AIR,
@@ -50,7 +50,7 @@ function getNeighbors(cell, game, field) {
     // why only one and this? because we're finding cell with this status
     if (
       testCell.status === CELL_STATUS.FULL &&
-      testCell.player === game.currentMove.player
+      testCell.player === game.currentPlayer.player
     ) {
       neighbors.push(testCell);
       break;
@@ -59,7 +59,7 @@ function getNeighbors(cell, game, field) {
     // if our 'half'
     if (
       testCell.status === CELL_STATUS.HALF &&
-      testCell.player === game.currentMove.player
+      testCell.player === game.currentPlayer.player
     ) {
       neighbors.push(testCell);
     }
@@ -97,7 +97,7 @@ export function isHasConnect(row, column, game) {
         cell.column === column
       ) &&
       cell.status === CELL_STATUS.FULL &&
-      cell.player === game.currentMove.player
+      cell.player === game.currentPlayer.player
     ) {
       return true;
     }
@@ -124,13 +124,13 @@ export function isHasConnect(row, column, game) {
 }
 
 export function checkMove(row, column, game) {
-  const player = game.currentMove.player;
+  const player = game.currentPlayer.player;
 
   console.log('checkMove :: arguments', row, column, player);
   const currentCell = game.field[row-1][column-1];
   let newStatus = null;
   
-  console.log('makeMove :: currentCell:', game.currentMove, currentCell, row, column);
+  console.log('makeMove :: currentCell:', game.currentPlayer, currentCell, row, column);
   // test current position
   // if current cell is on someone's half (kurgan, курган)
   if (currentCell.status === CELL_STATUS.HALF) {
@@ -153,12 +153,12 @@ export function checkMove(row, column, game) {
 
   // if this is first move we should check for start position
   if (
-    game.currentMove.moveCount === 1 &&
-    game.currentMove.remain === MOVES_COUNT
+    game.currentPlayer.moveCount === 1 &&
+    game.currentPlayer.remain === MOVES_COUNT
   ) {
     if (
       currentCell.isStartLocation &&
-      currentCell.player === game.currentMove.player
+      currentCell.player === game.currentPlayer.player
     ) {
       return {
         ok: true,

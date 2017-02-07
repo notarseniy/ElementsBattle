@@ -17,7 +17,7 @@ class Game extends Component {
     // if game started
     if (game.players) {
       for (let player = 0; player < PLAYER_COUNT; player++) {
-        const current = (game.currentMove.player === player) ? game.currentMove : false;
+        const current = (game.currentPlayer.player === player) ? game.currentPlayer : false;
 
         $players.push(
           <Player key={player} player={game.players[player]} current={current} />
@@ -28,7 +28,7 @@ class Game extends Component {
     return (
       <div className={style.ui}>
         <h1 className={style.header}>Битва стихий</h1>
-        <div className={style.moveCount}>{this.renderMoveCount(game.currentMove.moveCount)}</div>
+        <div className={style.moveCount}>{this.renderMoveCount(game.currentPlayer.moveCount)}</div>
         {$players}
         <Numbers isVertical={true} />
         <Numbers isVertical={false} />
