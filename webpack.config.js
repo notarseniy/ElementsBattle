@@ -27,7 +27,7 @@ module.exports = {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
     //prod: publicPath: 'http://' + host + ':' + port + '/ElementsBattle/'
-    publicPath: 'http://' + host + ':' + port + '/'
+    publicPath: 'http://' + host + ((process.env.NODE_ENV !== 'production') ? (':' + port) : '' ) + '/'
   },
   module: {
     rules: [
