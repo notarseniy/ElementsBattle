@@ -220,6 +220,7 @@ export default handleActions({
         remain: MOVES_COUNT,
         moveCount: state.players[player].moveCount,
         // flush history, because undo works only for current player
+        undoCount: 0,
         history: []
       }
     };
