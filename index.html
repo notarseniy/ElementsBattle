@@ -4,7 +4,14 @@
     <meta charset="utf-8">
     <title>Battle of the Elements</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" id="viewport">
+    <script>
+      // we're need this for graceful handling for our UI
+      if (screen.width <= 690) {
+        var mvp = document.getElementById('viewport');
+        mvp.setAttribute('content','width=690');
+      }
+    </script>
 
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.rawgit.com/resir014/Clear-Sans-Webfont/v1.0.1/css/clear-sans.css">
     <link rel="stylesheet" type="text/css" href="static/main.css">
