@@ -47,6 +47,7 @@
   "dependencies": {
     "i18next": "^7.0.0",
     "i18next-browser-languagedetector": "^1.0.1",
+    "i18next-intervalplural-postprocessor": "^1.0.0",
     "ilyabirman-likely": "^2.2.1",
     "normalize.css": "^5.0.0",
     "postcss-import": "^9.1.0",

@@ -1,15 +1,15 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import IntervalPlural from 'i18next-intervalplural-postprocessor';
 
 import locales from './locales';
 
-console.log(locales);
-
 i18n
   .use(LanguageDetector)
+  .use(IntervalPlural)
   .init({
-    fallbackLng: 'ru',
-    lng: 'ru',
+    fallbackLng: 'en',
+    lng: 'en',
 
     // have a common namespace used around the full app
     ns: ['common'],

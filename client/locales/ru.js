@@ -30,13 +30,13 @@ export default {
   },
   ui: {
     game: {
-      moveCount: {
-        nonempty: 'Идёт {{moveCount}}-й ход',
-        empty: 'Начните игру'
-      }
+      moveCount_interval: 'Идёт {{count}}-й ход',
     },
     player: {
-      title: 'Ходит {{player}}'
+      title: 'Ходит {{player}}',
+      remain_0: 'Осталась одна клетка',
+      remain_1: 'Осталось {{count}} клетки',
+      remain_2: 'Осталось {{count}} клеток'
     }
   }
 };

@@ -26,7 +26,7 @@ class Player extends Component {
       $ui = (
         <div className={`${style.currentPlayer} ${playerClass}`}>
           <div className={style.title}>{t('ui:player.title', { player: t('common:players.' + player.id).toLowerCase() })}</div>
-          <div className={style.remain}>{this.renderRemain(current.remain)}</div>
+          <div className={style.remain}>{t('ui:player.remain', { count: current.remain })}</div>
         </div>
       );
     } else {

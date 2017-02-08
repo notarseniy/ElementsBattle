@@ -32,22 +32,12 @@ class Game extends Component {
     return (
       <div className={style.ui}>
         <h1 className={style.header}>{t('common:title')}</h1>
-        <div className={style.moveCount}>{this.renderMoveCount(game.currentPlayer.moveCount)}</div>
+        <div className={style.moveCount}>{t('ui:game.moveCount_interval', { postProcess: 'interval', count: game.currentPlayer.moveCount })}</div>
         {$players}
         <Numbers isVertical={true} />
         <Numbers isVertical={false} />
       </div>
     );
-  }
-
-  renderMoveCount(moveCount) {
-    const { t } = this.props;
-
-    if (moveCount !== 0) {
-      return t('ui:game.moveCount.nonempty', { moveCount });
-    } else {
-      return t('ui:game.moveCount.empty');
-    }
   }
 }
 
