@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import Language from '../../components/Language';
 import Copyright from '../../components/Copyright';
 import * as GameActions from '../../actions/game';
 import style from './style.css';
@@ -19,6 +21,7 @@ class App extends Component {
     return (
       <main className={style.container}>
         {childrenWithProps}
+        <Language />
         <Copyright />
       </main>
     );

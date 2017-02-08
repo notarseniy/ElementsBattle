@@ -9,7 +9,7 @@ i18n
   .use(IntervalPlural)
   .init({
     fallbackLng: 'en',
-    lng: 'en',
+    lngs: ['en', 'ru'],
 
     // have a common namespace used around the full app
     ns: ['common'],
