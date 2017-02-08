@@ -22,7 +22,11 @@ module.exports = {
       'react-router',
       'react-router-redux',
       'redux',
-      'ramda'
+      'ramda',
+      'i18next',
+      'i18next-browser-languagedetector',
+      'react-i18next',
+      'ilyabirman-likely'
     ]
   },
   output: {

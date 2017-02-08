@@ -23,12 +23,6 @@ export const PLAYERS = {
   2: 2,
   3: 3
 };
-export const PLAYERS_TITLES = {
-  [PLAYERS.WATER]: 'Вода',
-  [PLAYERS.AIR]: 'Воздух',
-  [PLAYERS.EARTH]: 'Земля',
-  [PLAYERS.FIRE]: 'Огонь'
-};
 export const PLAYERS_NAMES = {
   [PLAYERS.WATER]: 'water',
   [PLAYERS.AIR]: 'air',

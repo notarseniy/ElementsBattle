@@ -49,7 +49,7 @@ class Cell extends Component {
         role="gridcell"
         onClick={this.handleClick.bind(this)}
         onFocus={this.handleFocus.bind(this)}
-        ref={this.refHandler}
+      ref={this.refHandler}
       ></button>
     );
   }
