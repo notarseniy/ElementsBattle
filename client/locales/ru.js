@@ -30,7 +30,8 @@ export default {
   },
   ui: {
     game: {
-      moveCount_interval: 'Идёт {{count}}-й ход',
+      'moveCount': 'Идёт {{count}}-й ход',
+      'moveCount_interval': 'Идёт {{count}}-й ход'
     },
     player: {
       title: 'Ходит {{player}}',

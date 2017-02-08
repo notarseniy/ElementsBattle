@@ -9,14 +9,7 @@ class Player extends Component {
   constructor(props, context) {
     super(props, context);
   }
-
-  renderRemain(remain) {
-    const { t } = this.props;
-
-    // Осталось 5 клеток
-    return `${numberDeclination(remain, ['Осталась', 'Осталось', 'Осталось'])} ${remain} ${numberDeclination(remain, ['клетка', 'клетки', 'клеток'])}`
-  }
-
+  
   render() {
     const { game, actions, t, player, current } = this.props;
     let $ui = null;

@@ -30,7 +30,7 @@ export default {
   },
   ui: {
     game: {
-      'moveCount': '{{count}}-th move',
+      moveCount: '{{count}}-th move',
       'moveCount_interval': '(1){First move};(2){Second move};(3){Third move};',
     },
     player: {
