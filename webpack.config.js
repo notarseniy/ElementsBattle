@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = new require("extract-text-webpack-plugin");
+var OptimizeJsPlugin = require("optimize-js-plugin");
 
 var ExtractStyles = new ExtractTextPlugin('main.css');
 
@@ -88,7 +89,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     }),
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}, output: {comments: false}})
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}, output: {comments: false}}),
+    new OptimizeJsPlugin({
+      sourceMap: true
+    })
   ],
   devServer: {
     contentBase: './client',
