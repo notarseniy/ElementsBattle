@@ -107,6 +107,8 @@ function generatePlayers(players) {
        * 1 = first move, and so on
        **/
       moveCount: 1,
+
+
     }
   );
 

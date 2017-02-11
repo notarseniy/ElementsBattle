@@ -1,9 +1,9 @@
-import { routerReducer as routing } from 'react-router-redux'
+import { router5Reducer } from 'redux-router5';
 import { combineReducers } from 'redux';
 import game from './game';
 
 const appReducer = combineReducers({
-  routing,
+  router: router5Reducer,
   game
 });
 
