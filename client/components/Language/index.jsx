@@ -24,7 +24,7 @@ class Language extends Component {
   render() {
     return (
       <div className={style.language}>
-        <a className={(this.state.language === 'ru') ? style.active : ''} onClick={() => this.handleClick('ru')}>русский</a> :: <a className={(this.state.language === 'en') ? style.active : ''} onClick={() => this.handleClick('en')}>english</a>
+        <a className={(this.state.language === 'ru') ? style.active : ''} tabIndex="0" onClick={() => this.handleClick('ru')}>русский</a> :: <a className={(this.state.language === 'en') ? style.active : ''} tabIndex="0" onClick={() => this.handleClick('en')}>english</a>
       </div>
     )
   }
