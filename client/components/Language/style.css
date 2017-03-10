@@ -1,6 +1,7 @@
 .language {
   position: fixed;
   bottom: 50px;
+  left: 0;
   width: inherit;
   text-align: center;
   font-size: 16px;

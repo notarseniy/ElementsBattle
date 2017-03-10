@@ -1,6 +1,7 @@
 .copyright {
   position: fixed;
   bottom: 25px;
+  left: 0;
   width: inherit;
   text-align: center;
   font-size: 16px;
